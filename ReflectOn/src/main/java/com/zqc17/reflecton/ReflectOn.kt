@@ -1,10 +1,8 @@
 package com.zqc17.reflecton
 
-import kotlin.reflect.KClass
-
 /**
  * <example>
- *     ReflectOn(Test::class)
+ *     ReflectOn(Test::class.java)
  *         .handleError { Log.e(it) } // 处理异常
  *         .reflectStatic {
  *             Attr["sStaticField"] = 0 // 反射修改静态属性
@@ -44,8 +42,6 @@ class ReflectOn {
             ReflectContext(clazz)
         }
     }
-
-    constructor(kClazz: KClass<*>): this(kClazz.java)
 
     /**
      * 反射创建实例并且绑定该对象
