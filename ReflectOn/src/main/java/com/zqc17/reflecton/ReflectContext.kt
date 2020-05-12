@@ -44,6 +44,24 @@ class ReflectContext(private val mClazz: Class<*>) {
         field.set(obj, value)
     }
 
+    /**
+     * 反射创建代理实例的语法设计
+     *     interface ITest {
+     *         fun test(name: String): Int
+     *         fun getSelf(): ITest
+     *     }
+     *     ReflectOn("com.private.interface.ITest")
+     *         .newProxyInstance {
+     *             Fn["test"][String::class.java] { proxy, args -> 0 }
+     *             Fn["getSelf"] { proxy, args -> proxy }
+     *         }
+     */
+    fun newProxyInstance(builder: ProxyContext.() -> Unit): Any {
+        val proxyContext = ProxyContext(mClazz, this::getReflectMethod)
+        builder.invoke(proxyContext)
+        return proxyContext.newProxyInstance()
+    }
+
     // 反射获取方法并缓存
     private fun getReflectMethod(name: String, argsClazz: Array<Class<*>>): Method {
         return mMethodCache[name to argsClazz] ?: let {
