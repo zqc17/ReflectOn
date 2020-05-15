@@ -87,6 +87,14 @@ class ReflectOn {
         return this
     }
 
+
+    /**
+     * 创建一个内部类的 `ReflectOn` 包装
+     */
+    fun innerClass(innerClassName: String): ReflectOn {
+        return ReflectOn("$mClazz\$$innerClassName")
+    }
+
     /**
      * 处理异常
      */
