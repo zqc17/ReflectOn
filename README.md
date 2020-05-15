@@ -5,7 +5,7 @@
 # 用法
 
 ```kotlin
-ReflectOn(String::class)
+ReflectOn(String::class.java)
     .newInstance("abc") // 反射创建实例
     .doReflect {
         val substring = Fn["substring"](0, 1) // 反射调用方法
