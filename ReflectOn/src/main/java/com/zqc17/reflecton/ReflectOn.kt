@@ -20,11 +20,13 @@ package com.zqc17.reflecton
 class ReflectOn {
     private var mErrorHandler: ((Exception) -> Unit)? = null
     private lateinit var mBoundInstance: Any
+    private val mClazz: Class<*>
     private val mReflectContextLazyInitiator: Lazy<ReflectContext>
     private val mReflectContext: ReflectContext
         get() = mReflectContextLazyInitiator.value
 
     constructor(instance: Any) {
+        mClazz = instance.javaClass
         mReflectContextLazyInitiator = lazy {
             ReflectContext(instance.javaClass)
         }
@@ -32,12 +34,14 @@ class ReflectOn {
     }
 
     constructor(className: String) {
+        mClazz = Class.forName(className)
         mReflectContextLazyInitiator = lazy {
             ReflectContext(Class.forName(className))
         }
     }
 
     constructor(clazz: Class<*>) {
+        mClazz = clazz
         mReflectContextLazyInitiator = lazy {
             ReflectContext(clazz)
         }
