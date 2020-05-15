@@ -59,6 +59,17 @@ class ReflectOn {
     }
 
     /**
+     * 反射创建实例并返回该实例
+     */
+    fun getNewInstance(vararg args: Any): Any? {
+        var instance: Any? = null
+        captureError {
+            instance = mReflectContext.newInstance(*args)
+        }
+        return instance
+    }
+
+    /**
      * 绑定一个对象用于后续反射
      */
     fun bindInstance(instance: Any): ReflectOn {
